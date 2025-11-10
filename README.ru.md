@@ -72,14 +72,13 @@
 1. Склонируйте или создайте проект:
 
 ```bash
-mkdir telegram-greenapi-adapter
-cd telegram-greenapi-adapter
+cd greenapi-integration-telegram
 ```
 
 2. Склонируйте репозиторий:
 
 ```bash
-git clone https://github.com/AshLeigh-Fraxinus/greenapi-integration-telegram.git
+git clone https://github.com/green-api/greenapi-integration-telegram.git
 ```
 
 3. Установите зависимости:

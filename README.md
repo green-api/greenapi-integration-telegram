@@ -72,14 +72,13 @@ The bot provides the following commands:
 1. Clone or create the project:
 
 ```bash
-mkdir telegram-greenapi-adapter
-cd telegram-greenapi-adapter
+cd greenapi-integration-telegram
 ```
 
 2. Clone the repository:
 
 ```bash
-git clone https://github.com/AshLeigh-Fraxinus/greenapi-integration-telegram.git
+git clone https://github.com/green-api/greenapi-integration-telegram.git
 ```
 
 3. Install dependencies:
