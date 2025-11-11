@@ -26,8 +26,8 @@ export class NotificationsCommand {
       return { status: "invalid_format" };
     }
 
-    const action = args[0].toLowerCase();
-    const type = args[1].toLowerCase();
+    const type = args[0].toLowerCase();
+    const action = args[1].toLowerCase();
 
     if (action !== 'on' && action !== 'off') {
       await this.bot.send({

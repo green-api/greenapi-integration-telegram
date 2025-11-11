@@ -72,7 +72,7 @@ The bot provides the following commands:
 1. Clone or create the project:
 
 ```bash
-cd greenapi-integration-telegram
+mkdir greenapi-integration-telegram
 ```
 
 2. Clone the repository:
@@ -94,6 +94,10 @@ TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
 PORT=3000
 WEBHOOK_URL= https://your-webhook-url/
 ```
+
+- `TELEGRAM_BOT_TOKEN` - via @BotFather
+- `PORT` - by default 3000
+- `WEBHOOK_URL` - public server adress
 
 5. Start the application:
 
