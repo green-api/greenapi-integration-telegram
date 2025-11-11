@@ -31,11 +31,8 @@ export class TelegramAdapter extends BaseAdapter<TelegramWebhook, TelegramPlatfo
     const idInstance = webhook.instanceData.idInstance;
     const user = await (this.storage as SQLiteStorage).findUserByInstanceId(idInstance);
     if (!user) {
-      throw new IntegrationError(
-        `User for instance ${idInstance} not found`,
-        "USER_NOT_FOUND",
-        404
-      );
+      console.log(`[ADAPTER] User for instance ${idInstance} not found, skipping webhook`);
+      return; 
     }
 
     const notificationSettings = await (this.storage as SQLiteStorage).getNotificationSettings(user.chat_id);

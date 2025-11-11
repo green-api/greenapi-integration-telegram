@@ -35,12 +35,19 @@ export class TelegramTransformer extends GreenApiMessageTransformer<TelegramWebh
         return this.stateTransformer.handleStateInstanceChanged(webhook, language);
       
       default:
-        throw new IntegrationError(
-          `Unsupported webhook type: ${webhook.typeWebhook}`,
-          "UNSUPPORTED_WEBHOOK_TYPE",
-          400
-        );
-    }
+        console.log(`[TRANSFORMER] Webhook type "${webhook.typeWebhook}" is not supported, skipping`);
+        if (language === 'ru' || language === 'kz') {
+          return {
+            chat_id: "", 
+            text: `Notification type "${webhook.typeWebhook}" is not supported in this integration version, the message will not be received in telegram.`
+          };
+        } else {
+          return {
+            chat_id: "", 
+            text: `Тип уведомления "${webhook.typeWebhook}" не поддерживается в этой версии интеграции, сообщение не будет получено в телеграмм-чате.`
+          };
+        }
+      }
   }
 
   getAdditionalMessages(webhook: GreenApiWebhook, language: string = 'en'): TelegramPlatformMessage[] {

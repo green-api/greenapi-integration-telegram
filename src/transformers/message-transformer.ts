@@ -117,11 +117,22 @@ export class MessageTransformer extends BaseTransformer {
         };
       
       default:
-        throw new IntegrationError(
-          `Unsupported message type: ${messageData.typeMessage}`,
-          "UNSUPPORTED_MESSAGE_TYPE",
-          400
-        );
+        console.log(`[TRANSFORMER] Webhook type "${messageData.typeMessage}" is not supported, skipping`);
+        if (language === 'ru' || language === 'kz') 
+          {
+            return {
+              chat_id: "", 
+              text: header + `<code>Тип уведомления "${messageData.typeMessage}" не поддерживается в этой версии интеграции, сообщение не будет получено в телеграмм-чате.</code>`,
+              parse_mode: "HTML"
+            };
+            } 
+          else {
+            return {
+              chat_id: "", 
+              text: header + `<code>Notification type "${messageData.typeMessage}" is not supported in this integration version, the message will not be received in telegram.</code>`,
+              parse_mode: "HTML"
+            };
+          }
     }
   }
 
