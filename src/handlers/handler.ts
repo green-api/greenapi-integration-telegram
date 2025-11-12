@@ -17,6 +17,8 @@ import {
   CreateInstanceCommand,
   ChangeInstanceCommand,
   SetPartnerTokenCommand,
+  SetChatCommand,
+  ResetChatCommand,
 } from "./commands";
 
 export class TelegramHandler {
@@ -165,6 +167,16 @@ export class TelegramHandler {
       case '/me':
         const meCommand = new MeCommand(this.storage, this.bot);
         return await meCommand.execute(chatId, language);
+      
+      case '/setchat':
+      case '/setChat':
+        const setChatCommand = new SetChatCommand(this.storage, this.bot);
+        return await setChatCommand.execute(messageText, chatId, language);
+      
+      case '/resetchat':
+      case '/resetChat':
+        const resetChatCommand = new ResetChatCommand(this.storage, this.bot);
+        return await resetChatCommand.execute(chatId, language);
 
       case '/notifications':
       case '/notification':
