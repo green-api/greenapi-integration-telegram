@@ -55,9 +55,12 @@ export class InstanceCommand {
         }
       };
 
-      await this.storage.createInstance(instanceData, BigInt(chatId));
+      await this.storage.updateUser(chatId, {
+        idInstance: idInstanceNumber,
+        apiTokenInstance: apiToken
+      });
 
-      console.log('[COMMANDS.instance] Created/updated instance for user:', { chatId, idInstance: idInstanceNumber });
+      console.log('[COMMANDS.instance] Updated instance for user:', { chatId, idInstance: idInstanceNumber });
 
       const setWebhook = await this.setWebhook.execute(instanceData);
 
@@ -74,17 +77,51 @@ export class InstanceCommand {
     } catch (error) {
       console.log("[COMMANDS.instance] Failed to handle instance command:", error);
       
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        let errorMessage = '';
+        
+        if (status === 401) {
+          errorMessage = Localization.getMessage('invalid_credentials', language) || 
+                        'Invalid instance ID or API token. Please check your credentials.';
+        } else if (status === 404) {
+          errorMessage = Localization.getMessage('instance_not_found', language) || 
+                        'Instance not found. Please check your instance ID.';
+        } else if (status === 429) {
+          errorMessage = Localization.getMessage('rate_limit_exceeded', language) || 
+                        'Rate limit exceeded. Please try again later.';
+        } else {
+          const errorBody = error.response?.data;
+          if (errorBody && typeof errorBody === 'object') {
+            errorMessage = `API Error ${status}: ${JSON.stringify(errorBody)}`;
+          } else if (errorBody) {
+            errorMessage = `API Error ${status}: ${errorBody}`;
+          } else {
+            errorMessage = Localization.getMessage('api_error', language) || 
+                          `API returned error status: ${status}`;
+          }
+        }
+        
+        await this.bot.send({
+          chat_id: chatId,
+          text: errorMessage,
+          parse_mode: "Markdown"
+        });
+        return { status: "api_error" };
+      }
+      
       if (error instanceof Error && 'code' in error && error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
         await this.bot.send({
           chat_id: chatId,
           text: Localization.getMessage('instance_already_linked', language)
         });
-      } else {
-        await this.bot.send({
-          chat_id: chatId,
-          text: Localization.getMessage('error_occurred', language)
-        });
+        return { status: "instance_already_exists" };
       }
+      
+      await this.bot.send({
+        chat_id: chatId,
+        text: Localization.getMessage('error_occurred', language)
+      });
       
       return { status: "error" };
     }

@@ -16,6 +16,7 @@ export class Localization {
       'send_messages': 'Отправляйте сообщения, и они будут пересылаться в WhatsApp.',
       'error_occurred': 'Произошла ошибка.',
       'invalid_format': 'Неверный формат.',
+      'invalid_language': 'Данный язык не поддерживается. Пожалуйста, отправьте `/language ru` либо `/language en`',
       'unknown_command': 'Неизвестная команда.',
       'user_not_found': 'Пользователь не найден',
       'no_instance': 'Инстанс не привязан.',
@@ -45,6 +46,9 @@ export class Localization {
       'error_getting_info': 'Ошибка при получении информации',
       'error_updating_notifications': 'Ошибка при обновлении настроек уведомлений',
       'error_getting_notifications': 'Ошибка при получении настроек уведомлений',
+      'invalid_credentials': 'Неверные параметры инстанса. Проверьте указанные `idInstance` и  `apiTokenInstance`',
+      'instance_not_found': 'Инстанс не найден. Проверьте указанный `idInstance`',
+      'rate_limit_exceeded': 'Превышена частота отправки запросов. Повторите попытку позже.',
 
       // Конкретные сообщения
       'missing_token': 'Пожалуйста, укажите partner token.',
@@ -71,6 +75,7 @@ export class Localization {
       'send_messages': 'Send messages and they will be forwarded to WhatsApp.',
       'error_occurred': 'An error occurred.',
       'invalid_format': 'Invalid format.',
+      'invalid_language': 'This language is not supported. Please send `/language ru` or `/language en`',
       'unknown_command': 'Unknown command.',
       'user_not_found': 'User not found',
       'no_instance': 'Instance not linked.',
@@ -100,6 +105,9 @@ export class Localization {
       'error_getting_info': 'Error getting information',
       'error_updating_notifications': 'Error updating notification settings',
       'error_getting_notifications': 'Error getting notification settings',
+      'invalid_credentials': 'Invalid instance ID or API token. Please check your credentials.',
+      'instance_not_found': 'Instance not found. Please check your instance ID.',
+      'rate_limit_exceeded': 'Rate limit exceeded. Please try again later.',
 
       // Specific messages
       'missing_token': 'Please specify partner token.',
@@ -270,9 +278,9 @@ To get started, link your Green API instance.
 
   static getInstanceFormatText(language: string = 'en'): string {
     if (language === 'ru' || language === 'kz') {
-      return "Неверный формат. Используйте:\n/instance 1101111111 abc123abc123abc123abc123abc123\n\nГде:\n• 1101111111 - idInstance\n• abc123... - apiTokenInstance";
+      return "Неверный формат. Используйте:\n/instance 1101111111 abc123abc123abc123abc123abc123\n\nГде:\n• 1101111111 - `idInstance`\n• abc123... - `apiTokenInstance`";
     } else {
-      return "Invalid format. Use:\n/instance 1101111111 abc123abc123abc123abc123abc123\n\nWhere:\n• 1101111111 - idInstance\n• abc123... - apiTokenInstance";
+      return "Invalid format. Use:\n/instance 1101111111 abc123abc123abc123abc123abc123\n\nWhere:\n• 1101111111 - `idInstance`\n• abc123... - `apiTokenInstance`";
     }
   }
 

@@ -27,13 +27,11 @@ export class SendMessage {
           "Неверный формат. Используйте:\n" +
           "<code>/reply &lt;номер_телефона&gt; &lt;сообщение&gt;</code>\n\n" +
           "Например:\n" +
-          "/reply +77073319453 Привет!\n" +
-          "/reply 77073319453 Привет!" :
+          "/reply 79876543210 Привет!" :
           "Invalid format. Use:\n" +
           "<code>/reply &lt;phone_number&gt; &lt;message&gt;</code>\n\n" +
           "For example:\n" +
-          "/reply +77073319453 Hello!\n" +
-          "/reply 77073319453 Hello!";
+          "/reply 79876543210 Hello!";
 
         await this.bot.send({
           chat_id: chatId,

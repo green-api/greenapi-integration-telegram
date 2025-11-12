@@ -26,7 +26,8 @@ export class LanguageCommand {
     if (language !== 'ru' && language !== 'en') {
       await this.bot.send({
         chat_id: chatId,
-        text: Localization.getMessage('invalid_format', currentLanguage)
+        text: Localization.getMessage('invalid_language', currentLanguage),
+        parse_mode: 'Markdown'
       });
       return { status: "invalid_language" };
     }

@@ -85,7 +85,16 @@ export class SQLiteStorage extends StorageProvider<TelegramUser> {
       throw new Error("Instance not found");
     }
     
-    const stmt = this.db.prepare(`DELETE FROM users WHERE id_instance = ?`);
+    const stmt = this.db.prepare(`
+      UPDATE users 
+      SET id_instance = NULL, 
+          apiTokenInstance = NULL, 
+          incoming_webhook = 0, 
+          outgoing_webhook = 0, 
+          state_webhook = 0,
+          updated_at = CURRENT_TIMESTAMP
+      WHERE id_instance = ?
+    `);
     stmt.run(idInstance.toString());
     console.log('[STORAGE] Removed Instance', instance.idInstance, 'from database');
     return instance;
@@ -311,9 +320,9 @@ export class SQLiteStorage extends StorageProvider<TelegramUser> {
   }
 
   async getUserLanguage(chatId: string): Promise<string> {
-    console.log('[STORAGE] Getting language for user:', chatId);
     const stmt = this.db.prepare(`SELECT language FROM users WHERE chat_id = ?`);
     const row = stmt.get(chatId) as any;
+    console.log('[STORAGE] Getting language for user:', row?.language);
     return row?.language || 'en'; 
   }
 
